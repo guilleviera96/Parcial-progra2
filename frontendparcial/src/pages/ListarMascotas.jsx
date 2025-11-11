@@ -34,7 +34,9 @@ function ListarMascotas() {
 
   const handleEliminar = async (id) => {
     try {
-      await api.delete(`/mascotas/eliminar/${id}`);
+      await api.delete(`/mascotas/eliminar/${id}`, {
+        params: { dni },
+      });
       setMascotas((prev) => prev.filter((m) => m.id !== id));
     } catch (err) {
       console.error("Error al eliminar mascota:", err);
@@ -64,6 +66,7 @@ function ListarMascotas() {
       {mascotaEditando && (
         <EditarMascotaForm
           mascota={mascotaEditando}
+          dni={dni}
           onClose={() => {
             setMascotaEditando(null);
             setError(null);
