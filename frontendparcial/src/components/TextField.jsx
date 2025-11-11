@@ -2,7 +2,7 @@ function TextField({ label, value, onChange, name, type = "text", placeholder = 
   return (
     <div className="mb-4">
       {label && (
-        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={name} className="block text-sm font-semibold mb-2">
           {label}
         </label>
       )}

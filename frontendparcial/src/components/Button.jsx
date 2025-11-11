@@ -9,10 +9,10 @@ function Button({
     const base = "px-4 py-2 rounded transition disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
-        primary: "bg-blue-700 text-white hover:bg-blue-700",
-        danger: "bg-red-500 text-white hover:bg-red-700",
-        edit: "bg-yellow-500 text-white hover:bg-yellow-800",
-        ghost: "bg-transparent text-red-600 hover:underline"
+        primary: "bg-blue-500 text-white font-bold hover:bg-blue-700",
+        danger: "bg-red-500 text-white font-bold hover:bg-red-700",
+        edit: "bg-yellow-500 text-white font-bold hover:bg-yellow-800",
+        ghost: "bg-transparent text-red-600 font-bold hover:underline"
     };
 
     return (

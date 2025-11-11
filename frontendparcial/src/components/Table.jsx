@@ -1,7 +1,7 @@
 import Button from "./Button";
 function Table({ mascotas, onEliminar, onEditar }) {
     if (!mascotas || mascotas.length === 0) {
-        return <p className="text-gray-500 mt-4">No hay mascotas registradas.</p>;
+        return <p className="text-gray-500 mt-4">Busca a tu mascotas</p>;
     }
 
     return (

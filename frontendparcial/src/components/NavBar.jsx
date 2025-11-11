@@ -3,13 +3,13 @@ export default function Navbar( ) {
   const location = useLocation();
 
   const linkClass = (path) =>
-    `px-3 py-2 rounded hover:bg-blue-100 ${
-      location.pathname === path ? 'font-semibold text-blue-600' : 'text-gray-700'
+    `px-2 py-2 hover:bg-blue-100 ${
+      location.pathname === path ? 'font-bold text-blue-500' : 'font-bold'
     }`;
 
   return (
     <nav className="flex gap-4 p-4 bg-gray-50 border-b border-gray-200">
-      <Link to="/" className={linkClass('/')}>Inicio</Link>
+      <Link to="/" className={linkClass('/')}>Crear Usuario</Link>
       <Link to="/agregar-mascotas" className={linkClass('/agregar-mascotas')}>Agregar mascotas</Link>
       <Link to="/listar-mascotas" className={linkClass('/listar-mascotas')}>Ver mascotas</Link>
 
