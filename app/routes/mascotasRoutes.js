@@ -3,7 +3,7 @@ import {
   crearMascotaController,
   editarMascota,
   eliminarMascotaController,
-  listarMascotasPorDniController,
+  listarMascotasController,
 } from "../controller/mascotaController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
@@ -16,5 +16,5 @@ router.put("/editar/:id", authMiddleware, editarMascota);
 //eliminar mascota
 router.delete("/eliminar/:id", authMiddleware, eliminarMascotaController);
 //listar mascotas
-router.get("/listar", authMiddleware, listarMascotasPorDniController);
+router.get("/listar", authMiddleware, listarMascotasController);
 export default router;

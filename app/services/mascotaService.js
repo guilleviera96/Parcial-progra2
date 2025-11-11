@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 export const buscarPropietarioPorDni = async (dni) => {
   const propietarios = await prisma.propietarios.findMany();
-
+  
   for (const propietario of propietarios) {
     const match = await bcrypt.compare(dni, propietario.dni);
     if (match) {
@@ -15,12 +15,8 @@ export const buscarPropietarioPorDni = async (dni) => {
 };
 
 
-export const crearMascota = async (data) => {
-  const { dni, nombre, raza, edad, color, peso } = data;
-
-  const propietario = await buscarPropietarioPorDni(dni);
-  if (!propietario) throw new Error("DNI no coincide con ningún propietario");
-
+export const crearMascota = async (data, propietarioId) => {
+  const { nombre, raza, edad, color, peso } = data;
 
   const nuevaMascota = await prisma.mascotas.create({
     data: {
@@ -29,19 +25,17 @@ export const crearMascota = async (data) => {
       edad: Number(edad),
       color,
       peso: Number(peso),
-      propietarioId: propietario.id,
+      propietarioId,
     },
   });
 
   return nuevaMascota;
 };
-
-export const editarMascotaPorId = async (id, data) => {
+export const editarMascotaPorId = async (id, data, propietarioId) => {
   const mascota = await prisma.mascotas.findUnique({ where: { id: Number(id) } });
 
-  if (!mascota) {
-    throw new Error("Mascota no encontrada");
-  }
+  if (!mascota) throw new Error("Mascota no encontrada");
+  if (mascota.propietarioId !== propietarioId) throw new Error("No tenés permiso para editar esta mascota");
 
   const mascotaActualizada = await prisma.mascotas.update({
     where: { id: mascota.id },
@@ -57,29 +51,19 @@ export const editarMascotaPorId = async (id, data) => {
   return mascotaActualizada;
 };
 
-export const eliminarMascotaPorId = async (id) => {
+export const eliminarMascotaPorId = async (id, propietarioId) => {
   const mascota = await prisma.mascotas.findUnique({ where: { id: Number(id) } });
 
-  if (!mascota) {
-    throw new Error("Mascota no encontrada");
-  }
+  if (!mascota) throw new Error("Mascota no encontrada");
+  if (mascota.propietarioId !== propietarioId) throw new Error("No tenés permiso para eliminar esta mascota");
 
   await prisma.mascotas.delete({ where: { id: mascota.id } });
 
   return { mensaje: `Mascota ${mascota.nombre} eliminada correctamente` };
 };
-
-
-
-export const listarMascotasPorDni = async (dni) => {
-  const propietario = await buscarPropietarioPorDni(dni);
-
-  if (!propietario) {
-    throw new Error("DNI no coincide con ningún propietario");
-  }
-
+export const listarMascotasPorPropietarioId = async (propietarioId) => {
   const mascotas = await prisma.mascotas.findMany({
-    where: { propietarioId: propietario.id },
+    where: { propietarioId },
   });
 
   return mascotas;

@@ -1,27 +1,30 @@
 import {
   crearMascota,
-  eliminarMascotaPorId,
-  listarMascotasPorDni,
+  listarMascotasPorPropietarioId,
   editarMascotaPorId as modificarMascota,
+  eliminarMascotaPorId
 } from "../services/mascotaService.js";
 
 export const crearMascotaController = async (req, res) => {
   try {
-    const mascota = await crearMascota(req.body);
+    const propietarioId = req.propietarioId;
+    const mascota = await crearMascota(req.body, propietarioId);
     res.status(201).json(mascota);
   } catch (error) {
     console.error("Error al crear mascota:", error);
-    res.status(500).json({ error: error.message || "Error al crear la mascota" });
+    res
+      .status(500)
+      .json({ error: error.message || "Error al crear la mascota" });
   }
 };
-
 
 export const editarMascota = async (req, res) => {
   try {
     const { id } = req.params;
     const datos = req.body;
+    const propietarioId = req.propietarioId;
 
-    const mascota = await modificarMascota(id, datos);
+    const mascota = await modificarMascota(id, datos, propietarioId);
     res.status(200).json(mascota);
   } catch (error) {
     console.error("Error al editar mascota:", error);
@@ -32,23 +35,27 @@ export const editarMascota = async (req, res) => {
 export const eliminarMascotaController = async (req, res) => {
   try {
     const { id } = req.params;
-    const resultado = await eliminarMascotaPorId(id);
+    const propietarioId = req.propietarioId;
+
+    const resultado = await eliminarMascotaPorId(id, propietarioId);
     res.status(200).json(resultado);
   } catch (error) {
     console.error("Error al eliminar mascota:", error);
-    res.status(500).json({ error: error.message || "Error al eliminar mascota" });
+    res
+      .status(500)
+      .json({ error: error.message || "Error al eliminar mascota" });
   }
 };
 
-
-export const listarMascotasPorDniController = async (req, res) => {
+export const listarMascotasController = async (req, res) => {
   try {
-    const { dni } = req.query;
-    const mascotas = await listarMascotasPorDni(dni);
+    const propietarioId = req.propietarioId;
+    const mascotas = await listarMascotasPorPropietarioId(propietarioId);
     res.status(200).json(mascotas);
   } catch (error) {
     console.error("Error al listar mascotas:", error);
-    res.status(500).json({ error: error.message || "Error al listar mascotas" });
+    res
+      .status(500)
+      .json({ error: error.message || "Error al listar mascotas" });
   }
 };
-
