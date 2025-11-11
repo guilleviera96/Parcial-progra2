@@ -1,3 +1,7 @@
+Clonar repositororio, ingresar a las carpetas correspondientes y utilizar el comando "npm i" para instalar las dependencias. Este comando debe ejecutarse en la carpeta app y frontendparcial ya que ambos tienen diferentes tecnologias y dependencias.
+
+
+
 ./app
 Backend del parcial. 
 Incluye:
